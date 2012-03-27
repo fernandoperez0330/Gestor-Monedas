@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
+	<File name="Gestor.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="300" topLine="2" />
+	</File>
 	<File name="Gestor.h" open="0" top="0" tabpos="0">
-		<Cursor position="203" topLine="0" />
+		<Cursor position="110" topLine="0" />
 	</File>
-	<File name="Lista.h" open="1" top="0" tabpos="3">
-		<Cursor position="194" topLine="1" />
+	<File name="Lista.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="519" topLine="17" />
 	</File>
-	<File name="Monedas.h" open="1" top="0" tabpos="1">
-		<Cursor position="84" topLine="0" />
+	<File name="Lista.h" open="0" top="0" tabpos="3">
+		<Cursor position="305" topLine="0" />
 	</File>
-	<File name="Objeto.h" open="1" top="1" tabpos="4">
-		<Cursor position="179" topLine="0" />
+	<File name="Monedas.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="128" topLine="0" />
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="2">
+	<File name="Monedas.h" open="0" top="0" tabpos="1">
+		<Cursor position="434" topLine="6" />
+	</File>
+	<File name="Objeto.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="373" topLine="8" />
+	</File>
+	<File name="Objeto.h" open="0" top="0" tabpos="4">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="main.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="35" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
