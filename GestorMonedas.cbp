@@ -31,9 +31,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Gestor.cpp" />
 		<Unit filename="Gestor.h" />
+		<Unit filename="Lista.cpp" />
 		<Unit filename="Lista.h" />
+		<Unit filename="Monedas.cpp" />
 		<Unit filename="Monedas.h" />
+		<Unit filename="Objeto.cpp" />
 		<Unit filename="Objeto.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
