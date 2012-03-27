@@ -33,7 +33,7 @@ void Lista::remover(int key){
 	if(getPrimero()==NULL){
 		return false;
 	}else{
-		Objeto *temporal = this->primero
+		Objeto *temporal = this->primero;
 		Objeto *temporalDos = NULL;
 		while (temporal!=NULL){
 			if(key == temporal->getKey()){
@@ -48,7 +48,9 @@ void Lista::remover(int key){
 			}
 			temporalDos = temporal;
 			temporal = temporal->getSiguiente();
+			
 		}
+		size--;
 	}
 
 }
