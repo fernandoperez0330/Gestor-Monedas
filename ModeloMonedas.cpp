@@ -1,21 +1,43 @@
+#include <iostream>
+#include <cstdio>
+#include <stdlib.h>
+#include <sstream>
+#include <fstream>
+
+#include "Objeto.h"
 #include "Lista.h"
+#include "Monedas.h"
 #include "ModeloMonedas.h"
 
-ModeloMonedas::ModeloMonedas(){
-    nombreArchivo = "monedas.csv";
-    monedaActual = NULL;
-    this -> monedas = this -> getAll();
+ModeloMonedas::ModeloMonedas(Monedas* monedaActual){
+    this -> nombreArchivo = "monedas.csv";
+    this -> monedaActual = monedaActual;
+    this -> monedas = this -> getTodos();
+    this -> separador = ",";
 }
 
 Monedas* ModeloMonedas::getMonedaActual(){
     return this -> monedaActual;
 }
 
+void ModeloMonedas::setMonedaActual(Monedas* monedaActual){
+    this -> monedaActual = monedaActual;
+}
+
 void ModeloMonedas::persistir(){
-    Objeto* objetoActual = this -> monedas -> getPrimero();
+    FILE* file = fopen(this -> nombreArchivo.c_str(),"w");
+    string resultado = "";
+    char buffer[33];
+    Objeto* objetoActual =  monedas ->getPrimero();
     while(objetoActual != NULL){
+        resultado+= itoa(((Monedas*) objetoActual) -> getValor(),buffer,10);
+        resultado+= this -> separador;
+        resultado+= itoa(((Monedas*) objetoActual) -> getCantidad(),buffer,10);
+        resultado+= "\n";
         objetoActual = objetoActual -> getSiguiente();
     }
+    fputs(resultado.c_str(), file);
+    fclose(file);
 }
 
 bool ModeloMonedas::agregar(){
@@ -30,11 +52,11 @@ bool ModeloMonedas::agregar(){
         objetoActual = objetoActual -> getSiguiente();
     }
     //cuando no encontro moneda del mismo valor
-    if (!encontro) this -> monedas -> agregar(monedas);
+    if (!encontro) this -> monedas -> agregar(monedaActual);
     return true;
 }
 
-Lista* ModeloMonedas::getAll(){
+Lista* ModeloMonedas::getTodos(){
     string linea;
     string elemento;
     int countAttr = 0;
@@ -51,9 +73,10 @@ Lista* ModeloMonedas::getAll(){
                 case 2: tmpMoneda -> setCantidad(atoi(elemento.c_str())); break;
             }
         }
-        if (countAttr != 0) listaMonedas ->agrega(tmpMoneda);
+        if (countAttr != 0) listaMonedas ->agregar(tmpMoneda);
     }
     return listaMonedas;
+    return new Lista;
 }
 
 int ModeloMonedas::getTotal(){

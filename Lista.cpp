@@ -22,6 +22,7 @@ void Lista::agregar(Objeto* objeto){
     if (getPrimero() == NULL){
         primero = ultimo = objeto;
     }else{
+        objeto -> setAnterior(ultimo);
         ultimo -> setSiguiente(objeto);
         ultimo = objeto;
     }
@@ -30,12 +31,12 @@ void Lista::agregar(Objeto* objeto){
 }
 
 void Lista::remover(int key){
-	if(getPrimero()==NULL){
-		return false;
-	}else{
-		Objeto *temporal = this->primero
-		Objeto *temporalDos = NULL;
-		while (temporal!=NULL){
+    Objeto *temporal;
+	Objeto *temporalDos;
+	if(getPrimero() != NULL){
+		temporal = this->primero;
+		temporalDos = NULL;
+		while (temporal != NULL){
 			if(key == temporal->getKey()){
 				if(temporalDos== NULL){
 					primero = temporal ->getSiguiente();
@@ -50,5 +51,4 @@ void Lista::remover(int key){
 			temporal = temporal->getSiguiente();
 		}
 	}
-
 }
