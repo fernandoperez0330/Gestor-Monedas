@@ -49,6 +49,8 @@ void Lista::remover(int key){
 			}
 			temporalDos = temporal;
 			temporal = temporal->getSiguiente();
+			
 		}
+		size--;
 	}
 }
