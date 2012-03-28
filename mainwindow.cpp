@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     connect(ui ->btn_Adm,SIGNAL(pressed()),this,SLOT(pressed_btnAdm()));
     connect(ui -> btn_devolver,SIGNAL(pressed()),this,SLOT(pressed_btnDevolver()));
 }
