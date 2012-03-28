@@ -1,0 +1,11 @@
+#include "cola.h"
+
+Cola::Cola()
+{
+    setAnterior(NULL);
+    setSiguiente(NULL);
+}
+
+int Cola::getMontoEnEspera(){
+    return this->montoEnEspera;
+}

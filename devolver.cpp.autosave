@@ -83,7 +83,7 @@ void Devolver::pressed_btnGenerar(){
 //metodo para poner en cola
 void Devolver::pressed_ponerEspera(){
     //QMessageBox::information(this, "Puesto en espera", ui->fldTotal->text());
-    ui->listView->setModelColumn(0);
+
 }
 
 

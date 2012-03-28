@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     Lista.cpp \
     Objeto.cpp \
     Monedas.cpp \
-    ModeloMonedas.cpp
+    ModeloMonedas.cpp \
+    cola.cpp
 
 HEADERS  += mainwindow.h \
     devolver.h \
@@ -25,7 +26,8 @@ HEADERS  += mainwindow.h \
     Lista.h \
     Objeto.h \
     Monedas.h \
-    ModeloMonedas.h
+    ModeloMonedas.h \
+    cola.h
 
 FORMS    += mainwindow.ui \
     devolver.ui \
