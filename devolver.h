@@ -14,7 +14,11 @@ class Devolver : public QWidget
 public:
     explicit Devolver(QWidget *parent = 0);
     ~Devolver();
-    
+private slots:
+    void pressed_btnGenerar();
+    void pressed_btnCancelar();
+    void pressed_ponerEspera();
+    void pressed_devolver();
 private:
     Ui::Devolver *ui;
 };

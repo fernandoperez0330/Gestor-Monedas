@@ -1,4 +1,4 @@
-#include <string>
+#include <iostream>
 #include "Objeto.h"
 #include "Monedas.h"
 #include "Lista.h"
@@ -16,10 +16,10 @@ class ModeloMonedas{
         //nombre del archivo para persistir los datos
         string nombreArchivo;
     public:
-        //
+        //elemento separador de los elementos del archivo
         string separador;
-        //metodo constructor
-        ModeloMonedas(Monedas* monedaActual);
+        //metodo constructor (privado)
+        ModeloMonedas();
         //metodo para obteber la moneda
         Monedas* getMonedaActual();
         //metodo para actualizar la moneda actual del modelo

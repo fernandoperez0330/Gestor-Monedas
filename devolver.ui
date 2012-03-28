@@ -11,9 +11,9 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Generador de Devueltas</string>
   </property>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="fldTotal">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -68,7 +68,7 @@ p, li { white-space: pre-wrap; }
     <string>Devueltas Posibles</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btnDevolver">
    <property name="geometry">
     <rect>
      <x>270</x>
@@ -81,7 +81,7 @@ p, li { white-space: pre-wrap; }
     <string>Devolver</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btnPonerEspera">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -94,7 +94,7 @@ p, li { white-space: pre-wrap; }
     <string>Poner en espera</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="btnCancelar">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -107,7 +107,7 @@ p, li { white-space: pre-wrap; }
     <string>Cancelar</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QPushButton" name="btnGenerar">
    <property name="geometry">
     <rect>
      <x>200</x>

@@ -9,11 +9,10 @@
 #include "Monedas.h"
 #include "ModeloMonedas.h"
 
-ModeloMonedas::ModeloMonedas(Monedas* monedaActual){
-    this -> nombreArchivo = "monedas.csv";
-    this -> monedaActual = monedaActual;
-    this -> monedas = this -> getTodos();
-    this -> separador = ",";
+ModeloMonedas::ModeloMonedas(){
+    nombreArchivo = "monedas.csv";
+    monedas = this -> getTodos();
+    separador = ",";
 }
 
 Monedas* ModeloMonedas::getMonedaActual(){
@@ -90,6 +89,6 @@ int ModeloMonedas::getTotal(){
 }
 
 Lista* ModeloMonedas::getMonedas(){
-    return monedas;
+    return this -> monedas;
 }
 

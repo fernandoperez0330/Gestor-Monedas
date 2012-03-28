@@ -18,6 +18,7 @@ public:
 
 private slots:
     void pressed_btnAdm();
+    void pressed_btnDevolver();
 
 private:
     Ui::MainWindow *ui;

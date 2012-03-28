@@ -28,7 +28,7 @@ void Administrar::pressed_agregar(){
         QMessageBox::warning(this,"Información","El cantidad de la moneda esta en blanco");
         ui -> fldCantidad -> setFocus();
     }else{
-        ModeloMonedas* modelo = new ModeloMonedas(NULL);
+        ModeloMonedas* modelo = new ModeloMonedas();
         Monedas* monedaActual = new Monedas;
         //convertir el valor de la moneda de string a entero
         monedaActual -> setValor(ui -> fldValor -> text().toUInt());
