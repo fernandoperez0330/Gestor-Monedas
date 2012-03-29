@@ -15,8 +15,6 @@ ModeloMonedas::ModeloMonedas(){
     monedas = this -> getTodos();
     separador = ",";
     listaDevueltas = new Lista;
-    listaDevueltas = new Lista;
-
 }
 
 Monedas* ModeloMonedas::getMonedaActual(){
@@ -129,6 +127,59 @@ bool ModeloMonedas::agregarDevueltas(Lista* combinacionAgregar){
     }else return false;
 }
 
+Lista* ModeloMonedas::generarDevueltasOrganizadas(Lista* listaAOrganizar){
+    //lista con las devueltas organizadas
+    Lista* listaDevueltasOrganizadas = new Lista;
+    int tamano = listaAOrganizar->getSize();
+    if(tamano > 0){
+        Lista* arrListaDevueltas[tamano];
+        Objeto* objetoActual = listaAOrganizar->getPrimero();
+        int count = 0;
+        //rellenar el arreglo
+        while(objetoActual != NULL){
+            arrListaDevueltas[count++] = (Lista*) objetoActual;
+            objetoActual = objetoActual -> getSiguiente();
+        }
+
+        //elemento temporal para organizar
+        Objeto* temporal = NULL;
+        //ordenar la lista de menor a mayor
+
+        for(int i = 0 ; i < tamano; i++){
+            int sum1 = 0;
+            Objeto* objTemporal1 = arrListaDevueltas[i] -> getPrimero();
+            //sumar todas las cantidades del temporal 1
+            while (objTemporal1 != NULL){
+                sum1 += ((Devueltas*) objTemporal1) -> getCantidad();
+                objTemporal1 = objTemporal1 -> getSiguiente();
+            }
+            for(int j = i + 1; j < tamano; j++){
+                int sum2 = 0;
+                Objeto* objTemporal2 = arrListaDevueltas[j] -> getPrimero();
+
+                //sumar todas las cantidades del temporal 2
+                while (objTemporal2 != NULL){
+                    sum2 += ((Devueltas*) objTemporal2) -> getCantidad();
+                    objTemporal2 = objTemporal2 -> getSiguiente();
+                }
+
+                if(sum1 > sum2){
+                    temporal = arrListaDevueltas[i];
+                    arrListaDevueltas[i] = arrListaDevueltas[j];
+                    arrListaDevueltas[j] = (Lista*) temporal;
+                }
+            }
+        }
+
+        //recorrer el arreglo para agregarlo a la lista a retornar
+        for(int i = 0 ; i < tamano; i++){
+            listaDevueltasOrganizadas -> agregar(arrListaDevueltas[i]);
+        }
+    }
+    //recorrer el arreglo para retonarlo como lista
+    return listaDevueltasOrganizadas;
+}
+
 Lista* ModeloMonedas::generarListaDevueltas(int total){
     Lista* listaCombinacion = new Lista;
     Devueltas * devuelta = new Devueltas;
@@ -200,51 +251,5 @@ Lista* ModeloMonedas::generarListaDevueltas(int total){
 
     }
 
-    return this ->generalDevueltasOrganizadas( listaDevueltas, total);
-}
-Lista* ModeloMonedas::generalDevueltasOrganizadas(Lista* lista, int total){
-    int tamano = lista->getSize();
-    if(tamano != 0){
-        Devueltas* arrListaDevueltas[tamano];
-                Objeto* objetoActual = lista->getPrimero();
-
-                int count = 0;
-                int a=0;
-                int j=0;
-
-                do{
-                    arrListaDevueltas[count] = (Devueltas*) objetoActual;
-                    objetoActual = objetoActual -> getSiguiente();
-                    count++;
-
-                }
-                while(count<= tamano -1);
-
-
-                //elemento temporal para organizar
-                Objeto* temporal = NULL;
-                //ordenar la lista de menor a mayor
-
-                    for(int i = -1 ; i < tamano -1; i++){
-                        while(j<tamano){
-                        //for(int j = i; j < tamano; j++){
-                        if(arrListaDevueltas[i] -> getCantidad() > arrListaDevueltas[j] -> getCantidad()){
-                            temporal = arrListaDevueltas[i];
-
-                            arrListaDevueltas[i] = arrListaDevueltas[j];
-                            arrListaDevueltas[j] = (Devueltas*) temporal;
-
-                        }
-                        j++;
-                        }
-
-                }
-                    while(a<tamano){
-                        this->listaDevueltasOrganizadas->agregar(arrListaDevueltas[a]);
-                    a++;
-}
-
-    }
-    return this->listaDevueltasOrganizadas;
-
+    return this -> generarDevueltasOrganizadas(listaDevueltas);
 }

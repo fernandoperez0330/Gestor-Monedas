@@ -40,6 +40,7 @@ void Devolver::pressed_btnGenerar(){
             QMessageBox::information(this,"Error","No se encontraron devueltas disponibles");
         }
         Objeto* combinacionActual = combinaciones -> getPrimero();
+        //organizar los elementos de menor a mayor
         ui -> tableWidget -> setRowCount(combinaciones -> getSize());
         string strCombinacion;
         int count = 0;
