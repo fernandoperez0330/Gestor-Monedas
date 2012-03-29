@@ -9,12 +9,6 @@ Devolver::Devolver(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //definir elementos
-    ui -> tableWidget -> setColumnCount(1);
-    ui -> tableWidget -> setRowCount(1);
-    ui -> tableWidget -> setColumnWidth(0,ui -> tableWidget ->width());
-
-    //eventos de los elementos de la ventana
     connect(ui -> btnCancelar,SIGNAL(pressed()),this,SLOT(pressed_btnCancelar()));
     connect(ui -> btnGenerar,SIGNAL(pressed()),this,SLOT(pressed_btnGenerar()));
     connect(ui -> btnPonerEspera,SIGNAL(pressed()),this,SLOT(pressed_ponerEspera()));
@@ -29,6 +23,7 @@ void Devolver::pressed_btnCancelar(){
 void Devolver::pressed_btnGenerar(){
     int total = ui ->fldTotal -> text().toUInt();
     ModeloMonedas* modelo = new ModeloMonedas;
+    Objeto* objetoActual;
     if (total > modelo ->getTotal()){
         QMessageBox::warning(this,"Error","No hay suficiente dinero en caja para devolverle, estamos en quiebra!!");
     }else{
@@ -41,7 +36,6 @@ void Devolver::pressed_btnGenerar(){
         //organizar los elementos de menor a mayor
         ui -> tableWidget -> setRowCount(combinaciones -> getSize());
         string strCombinacion;
-        int count = 0;
         while(combinacionActual != NULL){
             Objeto* combinacionElemento = ((Lista*) combinacionActual) -> getPrimero();
             strCombinacion = "";
@@ -52,16 +46,15 @@ void Devolver::pressed_btnGenerar(){
                 combinacionElemento = combinacionElemento -> getSiguiente();
                 if (combinacionElemento != NULL) strCombinacion+= " y ";
             }
-            QTableWidgetItem* widgetItem = new QTableWidgetItem(strCombinacion.c_str());
-            widgetItem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-            ui -> tableWidget -> setItem(count++,0,widgetItem);
-            combinacionActual = combinacionActual -> getSiguiente();
+            objetoActual = objetoActual -> getSiguiente();
         }
     }
 }
 
+
 //metodo para poner en cola
 void Devolver::pressed_ponerEspera(){
+    //QMessageBox::information(this, "Puesto en espera", ui->fldTotal->text());
 
 }
 
