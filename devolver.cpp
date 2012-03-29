@@ -74,11 +74,11 @@ void Devolver::pressed_ponerEspera(){
         Devueltas* devuelta;
         devuelta->setValor((ui->fldTotal->text().toInt()));
         cola->push(devuelta);
-        recorrer();
         QMessageBox::information(this,"Gestor de Monedas","Monto puesto en lista de espera!");
    }
 }
 
+/* Para recorrer la cola en espera
 void recorrer(){
     string combinacion = "";
     while(cola != NULL){
@@ -87,6 +87,7 @@ void recorrer(){
         cola->pop();
     }
 }
+*/
 
 
 //metodo de evneto para realizar la devuelta
