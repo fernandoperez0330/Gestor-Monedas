@@ -18,8 +18,6 @@ Devolver::Devolver(QWidget *parent) :
     connect(ui -> btnCancelar,SIGNAL(pressed()),this,SLOT(pressed_btnCancelar()));
     connect(ui -> btnGenerar,SIGNAL(pressed()),this,SLOT(pressed_btnGenerar()));
     connect(ui -> btnPonerEspera,SIGNAL(pressed()),this,SLOT(pressed_ponerEspera()));
-    connect(ui -> btnDevolver,SIGNAL(pressed()),this,SLOT(pressed_devolver()));
-
 }
 
 void Devolver::pressed_btnCancelar(){
