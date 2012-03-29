@@ -34,45 +34,25 @@ void Devolver::pressed_btnGenerar(){
     if (total > modelo ->getTotal()){
         QMessageBox::warning(this,"Error","No hay suficiente dinero en caja para devolverle, estamos en quiebra!!");
     }else{
-        //proceder a buscar los cambios (en caso de que aplique)
-        objetoActual = modelo -> getMonedas() -> getPrimero();
-        while(objetoActual != NULL){
-            result = "";
-            if (total == ((Monedas*) objetoActual)->getValor()){
-                result+= "1";
-                result+= " moneda de ";
-                result+= itoa(((Monedas*) objetoActual)->getValor(),buf,10);
-                result+= "\n";
-                QMessageBox::information(this,"titulo",result.c_str());
-            }else{
-                int cantidadTotal = ((Monedas*) objetoActual)->getCantidad();
-                totalSum = ((Monedas*) objetoActual)->getValor();
-                for(int i = 0; i < cantidadTotal; i++){
-                    totalSum = ((Monedas*) objetoActual)->getValor() + totalSum;
-                    if (totalSum == total){
-                        result+= itoa(i+2,buf,10);
-                        result+= " monedas de ";
-                        result+= itoa(((Monedas*) objetoActual)->getValor(),buf,10);
-                        result+= "\n";
-                        QMessageBox::information(this,"titulo",result.c_str());
-                    }
-                    subObjetoActual = modelo -> getMonedas() -> getPrimero();
-                    while(subObjetoActual != NULL){
-                        QMessageBox::information(this,"titulo","entro aqui");
-                        if (total == (totalSum + ((Monedas*) subObjetoActual) -> getValor())){
-                            result+= itoa(i+2,buf,10);
-                            result+= " monedas de ";
-                            result+= itoa(((Monedas*) objetoActual)->getValor(),buf,10);
-                            result+= "\n";
-                            QMessageBox::information(this,"titulo",result.c_str());
-                        }
-                        subObjetoActual = subObjetoActual -> getSiguiente();
-                    }
-
-                }
-
-
-
+        //obtener las devueltas de este monto
+        Lista* combinaciones = modelo->generarListaDevueltas(total);
+        if (combinaciones -> getSize() == 0){
+            QMessageBox::information(this,"Error","No se encontraron devueltas disponibles");
+        }
+        Objeto* combinacionActual = combinaciones -> getPrimero();
+        //organizar los elementos de menor a mayor
+        ui -> tableWidget -> setRowCount(combinaciones -> getSize());
+        string strCombinacion;
+        int count = 0;
+        while(combinacionActual != NULL){
+            Objeto* combinacionElemento = ((Lista*) combinacionActual) -> getPrimero();
+            strCombinacion = "";
+            while(combinacionElemento != NULL){
+                strCombinacion+= itoa(((Devueltas*) combinacionElemento) -> getCantidad(),new char[33],10);
+                strCombinacion+= " monedas de RD$";
+                strCombinacion+= itoa(((Devueltas*) combinacionElemento) -> getValor(),new char[33],10);
+                combinacionElemento = combinacionElemento -> getSiguiente();
+                if (combinacionElemento != NULL) strCombinacion+= " y ";
             }
             objetoActual = objetoActual -> getSiguiente();
         }
