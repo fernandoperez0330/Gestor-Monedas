@@ -32,3 +32,6 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     devolver.ui \
     administrar.ui
+
+OTHER_FILES += \
+    money.png

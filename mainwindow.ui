@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Gestor Monedas v1.0</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>money.png</normaloff>money.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="btn_devolver">
     <property name="geometry">

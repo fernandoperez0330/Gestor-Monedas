@@ -4,6 +4,7 @@
 Lista::Lista(){
     primero = NULL;
     ultimo = NULL;
+    size = 0;
 }
 
 Objeto* Lista::getPrimero(){
@@ -11,7 +12,7 @@ Objeto* Lista::getPrimero(){
 }
 
 int Lista::getSize(){
-    return size;
+    return this -> size;
 }
 
 Objeto* Lista::getUltimo(){
@@ -26,7 +27,7 @@ void Lista::agregar(Objeto* objeto){
         ultimo -> setSiguiente(objeto);
         ultimo = objeto;
     }
-    size++;
+    this -> size++;
     ultimo -> setSiguiente(NULL);
 }
 
@@ -51,6 +52,6 @@ void Lista::remover(int key){
 			temporal = temporal->getSiguiente();
 			
 		}
-		size--;
+        this -> size--;
 	}
 }

@@ -14,6 +14,7 @@ ModeloMonedas::ModeloMonedas(){
     nombreArchivo = "monedas.csv";
     monedas = this -> getTodos();
     separador = ",";
+    listaDevueltas = new Lista;
 }
 
 Monedas* ModeloMonedas::getMonedaActual(){
@@ -92,25 +93,50 @@ int ModeloMonedas::getTotal(){
 Lista* ModeloMonedas::getMonedas(){
     return this -> monedas;
 }
-Lista* ModeloMonedas::listaDevueltas(int total){
+
+bool ModeloMonedas::agregarDevueltas(Lista* combinacionAgregar){
+    bool encontro = false;
+    int countEncontrado = 0;
+    Objeto* combinaciones = this -> listaDevueltas -> getPrimero();
+    while(combinaciones != NULL){
+        Lista* combinacionActual = (Lista*) combinaciones;
+        Objeto* combinacionElemento = combinacionActual -> getPrimero();
+        countEncontrado = 0;
+        while(combinacionElemento != NULL){
+            Devueltas* devElemento = ((Devueltas*) combinacionElemento);
+            Objeto* combinacionElementoComparar = combinacionAgregar -> getPrimero();
+            while(combinacionElementoComparar != NULL){
+                Devueltas* devElementoComparar = ((Devueltas*) combinacionElementoComparar);
+                if (devElemento -> getValor() == devElementoComparar -> getValor() && devElemento -> getCantidad() == devElementoComparar -> getCantidad())
+                    countEncontrado++;
+                combinacionElementoComparar = combinacionElementoComparar -> getSiguiente();
+            }
+            combinacionElemento = combinacionElemento -> getSiguiente();
+        }
+
+        if (countEncontrado == combinacionActual -> getSize()){
+            encontro = true;
+            break;
+        }
+        combinaciones = combinaciones -> getSiguiente();
+    }
+
+    if (!encontro) {
+        this -> listaDevueltas -> agregar(combinacionAgregar);
+        return true;
+    }else return false;
+}
+
+Lista* ModeloMonedas::generarListaDevueltas(int total){
+    Lista* listaCombinacion = new Lista;
+    Devueltas * devuelta = new Devueltas;
     int totalSum = 0;
     int totalSubsum = 0;
-    int b = 0;
-    int i = 0;
-    char buf[5];
-
-
     Objeto* objetoActual;
     Objeto* subObjetoActual;
+
     //proceder a buscar los cambios (en caso de que aplique)
     objetoActual = this -> getMonedas() -> getPrimero();
-    /*
-    //Lista general de Devueltas
-
-    */
-    Lista* listaDevueltaGeneral = new Lista;
-    Lista* listaCombinacion;
-    Devueltas * devuelta;
     while(objetoActual != NULL){
         if (total == ((Monedas*) objetoActual)->getValor()){
             listaCombinacion = new Lista;
@@ -118,12 +144,11 @@ Lista* ModeloMonedas::listaDevueltas(int total){
             devuelta -> setCantidad(1);
             devuelta -> setValor(((Monedas*) objetoActual)->getValor());
             listaCombinacion -> agregar(devuelta);
-            listaDevueltaGeneral -> agregar(listaCombinacion);
-
+            this -> listaDevueltas -> agregar(listaCombinacion);
         }else{
             int cantidadTotal = ((Monedas*) objetoActual)->getCantidad();
             totalSum = ((Monedas*) objetoActual)->getValor();
-            for(i = 0; i < cantidadTotal; i++){
+            for(int i = 0; i < cantidadTotal; i++){
                 totalSum+= ((Monedas*) objetoActual)->getValor();
                 //romper el ciclo si la suma es mayor que el solicitado
                 if(totalSum > total) break;
@@ -133,7 +158,7 @@ Lista* ModeloMonedas::listaDevueltas(int total){
                     devuelta -> setCantidad(i+2);
                     devuelta -> setValor(((Monedas*) objetoActual)->getValor());
                     listaCombinacion -> agregar(devuelta);
-                    listaDevueltaGeneral -> agregar(listaCombinacion);
+                    this -> listaDevueltas -> agregar(listaCombinacion);
 
                 }
                 //cuando la sumatoria es menor que el total, buscar las posibles combinaciones
@@ -144,7 +169,7 @@ Lista* ModeloMonedas::listaDevueltas(int total){
                         int subValor = ((Monedas*) subObjetoActual) -> getValor();
                         totalSubsum = 0;
                         if (valor != subValor){
-                            for(b = 1 ;b <=((Monedas* )subObjetoActual) -> getCantidad(); b++){
+                            for(int b = 1 ;b <=((Monedas* )subObjetoActual) -> getCantidad(); b++){
                                 totalSubsum = totalSubsum + ((Monedas* )subObjetoActual) -> getValor();
                                 int subTotal = totalSum + totalSubsum;
                                 //romper el ciclo si la suma es mayor que el solicitado
@@ -159,8 +184,7 @@ Lista* ModeloMonedas::listaDevueltas(int total){
                                     devuelta -> setCantidad(b);
                                     devuelta -> setValor(((Monedas*) subObjetoActual)->getValor());
                                     listaCombinacion -> agregar(devuelta);
-
-                                    listaDevueltaGeneral -> agregar(listaCombinacion);
+                                    this -> agregarDevueltas(listaCombinacion);
                                 }
                             }
                         }
@@ -170,8 +194,6 @@ Lista* ModeloMonedas::listaDevueltas(int total){
             }
         }
         objetoActual = objetoActual -> getSiguiente();
-
-
-}
-
+    }
+    return this -> listaDevueltas;
 }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Objeto.h"
+#include "Devueltas.h"
 #include "Monedas.h"
 #include "Lista.h"
 
@@ -16,6 +17,8 @@ class ModeloMonedas{
         //nombre del archivo para persistir los datos
         string nombreArchivo;
     public:
+        //variable
+        Lista* listaDevueltas;
         //elemento separador de los elementos del archivo
         string separador;
         //metodo constructor (privado)
@@ -35,6 +38,9 @@ class ModeloMonedas{
         //metodo para persisir los datos actuales de la lista al archivo de datos
         void persistir();
         //metodo para retornar una lista con otra lista
-        Lista* listaDevueltas(int total);
+        Lista* generarListaDevueltas(int total);
+        //metodo para controlar que no se inserte combinaciones iguales (solo en algunos casos)
+        bool agregarDevueltas(Lista* combinacionAgregar);
+
 };
 #endif //MODELOMONEDAS_H
