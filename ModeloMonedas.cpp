@@ -15,6 +15,8 @@ ModeloMonedas::ModeloMonedas(){
     monedas = this -> getTodos();
     separador = ",";
     listaDevueltas = new Lista;
+    listaDevueltas = new Lista;
+
 }
 
 Monedas* ModeloMonedas::getMonedaActual(){
@@ -193,7 +195,56 @@ Lista* ModeloMonedas::generarListaDevueltas(int total){
                 }
             }
         }
+
         objetoActual = objetoActual -> getSiguiente();
+
     }
-    return this -> listaDevueltas;
+
+    return this ->generalDevueltasOrganizadas( listaDevueltas, total);
+}
+Lista* ModeloMonedas::generalDevueltasOrganizadas(Lista* lista, int total){
+    int tamano = lista->getSize();
+    if(tamano != 0){
+        Devueltas* arrListaDevueltas[tamano];
+                Objeto* objetoActual = lista->getPrimero();
+
+                int count = 0;
+                int a=0;
+                int j=0;
+
+                do{
+                    arrListaDevueltas[count] = (Devueltas*) objetoActual;
+                    objetoActual = objetoActual -> getSiguiente();
+                    count++;
+
+                }
+                while(count<= tamano -1);
+
+
+                //elemento temporal para organizar
+                Objeto* temporal = NULL;
+                //ordenar la lista de menor a mayor
+
+                    for(int i = -1 ; i < tamano -1; i++){
+                        while(j<tamano){
+                        //for(int j = i; j < tamano; j++){
+                        if(arrListaDevueltas[i] -> getCantidad() > arrListaDevueltas[j] -> getCantidad()){
+                            temporal = arrListaDevueltas[i];
+
+                            arrListaDevueltas[i] = arrListaDevueltas[j];
+                            arrListaDevueltas[j] = (Devueltas*) temporal;
+
+                        }
+                        j++;
+                        }
+
+                }
+                    while(a<tamano){
+                        this->listaDevueltasOrganizadas->agregar(arrListaDevueltas[a]);
+                    a++;
+}
+
+    }
+    return this->listaDevueltasOrganizadas;
+
 }
