@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>Administrar Monedas</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>money.png</normaloff>money.png</iconset>
+  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <sstream>
 #include <fstream>
+#include "Devueltas.h"
 
 #include "Objeto.h"
 #include "Lista.h"
@@ -13,6 +14,9 @@ ModeloMonedas::ModeloMonedas(){
     nombreArchivo = "monedas.csv";
     monedas = this -> getTodos();
     separador = ",";
+    listaDevueltas = new Lista;
+    listaDevueltas = new Lista;
+
 }
 
 Monedas* ModeloMonedas::getMonedaActual(){
@@ -92,3 +96,155 @@ Lista* ModeloMonedas::getMonedas(){
     return this -> monedas;
 }
 
+bool ModeloMonedas::agregarDevueltas(Lista* combinacionAgregar){
+    bool encontro = false;
+    int countEncontrado = 0;
+    Objeto* combinaciones = this -> listaDevueltas -> getPrimero();
+    while(combinaciones != NULL){
+        Lista* combinacionActual = (Lista*) combinaciones;
+        Objeto* combinacionElemento = combinacionActual -> getPrimero();
+        countEncontrado = 0;
+        while(combinacionElemento != NULL){
+            Devueltas* devElemento = ((Devueltas*) combinacionElemento);
+            Objeto* combinacionElementoComparar = combinacionAgregar -> getPrimero();
+            while(combinacionElementoComparar != NULL){
+                Devueltas* devElementoComparar = ((Devueltas*) combinacionElementoComparar);
+                if (devElemento -> getValor() == devElementoComparar -> getValor() && devElemento -> getCantidad() == devElementoComparar -> getCantidad())
+                    countEncontrado++;
+                combinacionElementoComparar = combinacionElementoComparar -> getSiguiente();
+            }
+            combinacionElemento = combinacionElemento -> getSiguiente();
+        }
+
+        if (countEncontrado == combinacionActual -> getSize()){
+            encontro = true;
+            break;
+        }
+        combinaciones = combinaciones -> getSiguiente();
+    }
+
+    if (!encontro) {
+        this -> listaDevueltas -> agregar(combinacionAgregar);
+        return true;
+    }else return false;
+}
+
+Lista* ModeloMonedas::generarListaDevueltas(int total){
+    Lista* listaCombinacion = new Lista;
+    Devueltas * devuelta = new Devueltas;
+    int totalSum = 0;
+    int totalSubsum = 0;
+    Objeto* objetoActual;
+    Objeto* subObjetoActual;
+
+    //proceder a buscar los cambios (en caso de que aplique)
+    objetoActual = this -> getMonedas() -> getPrimero();
+    while(objetoActual != NULL){
+        if (total == ((Monedas*) objetoActual)->getValor()){
+            listaCombinacion = new Lista;
+            devuelta = new Devueltas;
+            devuelta -> setCantidad(1);
+            devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+            listaCombinacion -> agregar(devuelta);
+            this -> listaDevueltas -> agregar(listaCombinacion);
+        }else{
+            int cantidadTotal = ((Monedas*) objetoActual)->getCantidad();
+            totalSum = ((Monedas*) objetoActual)->getValor();
+            for(int i = 0; i < cantidadTotal; i++){
+                totalSum+= ((Monedas*) objetoActual)->getValor();
+                //romper el ciclo si la suma es mayor que el solicitado
+                if(totalSum > total) break;
+                else if (totalSum == total){
+                    listaCombinacion = new Lista;
+                    devuelta = new Devueltas;
+                    devuelta -> setCantidad(i+2);
+                    devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+                    listaCombinacion -> agregar(devuelta);
+                    this -> listaDevueltas -> agregar(listaCombinacion);
+
+                }
+                //cuando la sumatoria es menor que el total, buscar las posibles combinaciones
+                else{
+                    subObjetoActual = this -> getMonedas() -> getPrimero();
+                    while(subObjetoActual != NULL){
+                        int valor = ((Monedas*) objetoActual) -> getValor();
+                        int subValor = ((Monedas*) subObjetoActual) -> getValor();
+                        totalSubsum = 0;
+                        if (valor != subValor){
+                            for(int b = 1 ;b <=((Monedas* )subObjetoActual) -> getCantidad(); b++){
+                                totalSubsum = totalSubsum + ((Monedas* )subObjetoActual) -> getValor();
+                                int subTotal = totalSum + totalSubsum;
+                                //romper el ciclo si la suma es mayor que el solicitado
+                                if (subTotal == total){
+                                    listaCombinacion = new Lista;
+                                    devuelta = new Devueltas;
+                                    devuelta -> setCantidad(i+2);
+                                    devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+                                    listaCombinacion -> agregar(devuelta);
+
+                                    devuelta = new Devueltas;
+                                    devuelta -> setCantidad(b);
+                                    devuelta -> setValor(((Monedas*) subObjetoActual)->getValor());
+                                    listaCombinacion -> agregar(devuelta);
+                                    this -> agregarDevueltas(listaCombinacion);
+                                }
+                            }
+                        }
+                        subObjetoActual = subObjetoActual -> getSiguiente();
+                    }
+                }
+            }
+        }
+
+        objetoActual = objetoActual -> getSiguiente();
+
+    }
+
+    return this ->generalDevueltasOrganizadas( listaDevueltas, total);
+}
+Lista* ModeloMonedas::generalDevueltasOrganizadas(Lista* lista, int total){
+    int tamano = lista->getSize();
+    if(tamano != 0){
+        Devueltas* arrListaDevueltas[tamano];
+                Objeto* objetoActual = lista->getPrimero();
+
+                int count = 0;
+                int a=0;
+                int j=0;
+
+                do{
+                    arrListaDevueltas[count] = (Devueltas*) objetoActual;
+                    objetoActual = objetoActual -> getSiguiente();
+                    count++;
+
+                }
+                while(count<= tamano -1);
+
+
+                //elemento temporal para organizar
+                Objeto* temporal = NULL;
+                //ordenar la lista de menor a mayor
+
+                    for(int i = -1 ; i < tamano -1; i++){
+                        while(j<tamano){
+                        //for(int j = i; j < tamano; j++){
+                        if(arrListaDevueltas[i] -> getCantidad() > arrListaDevueltas[j] -> getCantidad()){
+                            temporal = arrListaDevueltas[i];
+
+                            arrListaDevueltas[i] = arrListaDevueltas[j];
+                            arrListaDevueltas[j] = (Devueltas*) temporal;
+
+                        }
+                        j++;
+                        }
+
+                }
+                    while(a<tamano){
+                        this->listaDevueltasOrganizadas->agregar(arrListaDevueltas[a]);
+                    a++;
+}
+
+    }
+    return this->listaDevueltasOrganizadas;
+
+}
