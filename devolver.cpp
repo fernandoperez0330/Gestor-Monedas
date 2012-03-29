@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ModeloMonedas.h"
+#include "Devueltas.h"
 #include "devolver.h"
 #include "ui_devolver.h"
 
@@ -36,15 +37,32 @@ void Devolver::pressed_btnGenerar(){
     if (total > modelo ->getTotal()){
         QMessageBox::warning(this,"Error","No hay suficiente dinero en caja para devolverle, estamos en quiebra!!");
     }else{
+        //TODO: llevar para modelo
         //proceder a buscar los cambios (en caso de que aplique)
         objetoActual = modelo -> getMonedas() -> getPrimero();
+        /*
+        //Lista general de Devueltas
+
+        */
+        Lista* listaDevueltaGeneral = new Lista;
+        Lista* listaCombinacion;
+        Devueltas * devuelta;
         while(objetoActual != NULL){
             if (total == ((Monedas*) objetoActual)->getValor()){
+                listaCombinacion = new Lista;
+                devuelta = new Devueltas;
+                devuelta -> setCantidad(1);
+                devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+                listaCombinacion -> agregar(devuelta);
+                listaDevueltaGeneral -> agregar(listaCombinacion);
+
+                //TODO: quitar codigo (es temporal)
                 result = "1";
                 result+= " moneda de ";
                 result+= itoa(((Monedas*) objetoActual)->getValor(),buf,10);
                 result+= "\n";
                 QMessageBox::information(this,"primero",result.c_str());
+                //TODO: quitar codigo (es temporal)
             }else{
                 int cantidadTotal = ((Monedas*) objetoActual)->getCantidad();
                 totalSum = ((Monedas*) objetoActual)->getValor();
@@ -53,11 +71,20 @@ void Devolver::pressed_btnGenerar(){
                     //romper el ciclo si la suma es mayor que el solicitado
                     if(totalSum > total) break;
                     else if (totalSum == total){
+                        listaCombinacion = new Lista;
+                        devuelta = new Devueltas;
+                        devuelta -> setCantidad(i+2);
+                        devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+                        listaCombinacion -> agregar(devuelta);
+                        listaDevueltaGeneral -> agregar(listaCombinacion);
+
+                        //TODO: quitar codigo (es temporal)
                         result = itoa(i+2,buf,10);
                         result+= " monedas de ";
                         result+= itoa(((Monedas*) objetoActual)->getValor(),buf,10);
                         result+= "\n";
                         QMessageBox::information(this,"segundo",result.c_str());
+                        //TODO: quitar codigo (es temporal)
                     }
                     //cuando la sumatoria es menor que el total, buscar las posibles combinaciones
                     else{
@@ -69,18 +96,22 @@ void Devolver::pressed_btnGenerar(){
                             if (valor != subValor){
                                 for(b = 1 ;b <=((Monedas* )subObjetoActual) -> getCantidad(); b++){
                                     totalSubsum = totalSubsum + ((Monedas* )subObjetoActual) -> getValor();
-                                    /*result= "totalsum.: ";
-                                    result+= itoa(totalSum,buf,10);
-                                    result+= ", ";
-                                    result+= "totalSUBsum.: ";
-                                    result+= itoa(totalSubsum,buf,10);
-                                    result+= ", ";
-                                    result+= "totalSUBsum + totalsum.: ";*/
-                                   // result+= itoa(((int)totalSubsum + totalSum),buf,10);
-                                    //QMessageBox::information(this,"mensaje",result.c_str());
                                     int subTotal = totalSum + totalSubsum;
                                     //romper el ciclo si la suma es mayor que el solicitado
                                     if (subTotal == total){
+                                        listaCombinacion = new Lista;
+                                        devuelta = new Devueltas;
+                                        devuelta -> setCantidad(i+2);
+                                        devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+                                        listaCombinacion -> agregar(devuelta);
+
+                                        devuelta = new Devueltas;
+                                        devuelta -> setCantidad(b);
+                                        devuelta -> setValor(((Monedas*) subObjetoActual)->getValor());
+                                        listaCombinacion -> agregar(devuelta);
+
+                                        listaDevueltaGeneral -> agregar(listaCombinacion);
+                                        //TODO: quitar codigo (es temporal)
                                         result = itoa(i+2,buf,10);
                                         result+= " monedas de ";
                                         result+= itoa(((Monedas*) objetoActual)->getValor(),buf,10);
@@ -90,18 +121,18 @@ void Devolver::pressed_btnGenerar(){
                                         result+= itoa(((Monedas*) subObjetoActual)->getValor(),buf,10);
                                         result+= "\n";
                                         QMessageBox::information(this,"tercero",result.c_str());
+                                        //TODO: quitar codigo (es temporal)
                                     }
                                 }
                             }
-                            b = 0;
                             subObjetoActual = subObjetoActual -> getSiguiente();
                         }
                     }
                 }
-                i = 0;
             }
             objetoActual = objetoActual -> getSiguiente();
         }
+        //TODO: llevar para modelo
     }
 }
 //metodo para poner en cola
