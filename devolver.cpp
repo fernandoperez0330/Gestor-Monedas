@@ -2,7 +2,10 @@
 #include "ModeloMonedas.h"
 #include "devolver.h"
 #include "ui_devolver.h"
+#include <string>
 
+
+void recorrer();
 Devolver::Devolver(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Devolver)
@@ -62,9 +65,27 @@ void Devolver::pressed_btnGenerar(){
     }
 }
 
+Lista* cola = new Lista();
 //metodo para poner en cola
 void Devolver::pressed_ponerEspera(){
+    if(ui->fldTotal->text() == "" || ui->tableWidget->rowCount() > 0){
+        QMessageBox::information(this, "Gestor de Monedas", "Hay monedas disponible para el monto actual");
+    }else{
+        Devueltas* devuelta;
+        devuelta->setValor((ui->fldTotal->text().toInt()));
+        cola->push(devuelta);
+        recorrer();
+        QMessageBox::information(this,"Gestor de Monedas","Monto puesto en lista de espera!");
+   }
+}
 
+void recorrer(){
+    string combinacion = "";
+    while(cola != NULL){
+        combinacion = itoa(((Devueltas*) cola->getPrimero())->getValor(), new char[33],10);
+        cout << combinacion;
+        cola->pop();
+    }
 }
 
 

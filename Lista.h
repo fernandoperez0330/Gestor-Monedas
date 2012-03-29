@@ -28,5 +28,9 @@ class Lista: public Objeto{
         void agregar(Objeto* objeto);
         //metodo para remover un elemento a la lista
         void remover(int key);
+        //Metodo para agregar un elemento a la cola en espera
+        void push(Objeto* objeto);
+        //Metodo para remover un elemento de la cola en espera
+        Objeto* pop();
 };
 #endif //LISTA_H

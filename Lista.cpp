@@ -55,3 +55,21 @@ void Lista::remover(int key){
         this -> size--;
 	}
 }
+
+void Lista::push(Objeto* objeto){
+        if(primero == NULL){
+            primero = objeto;
+            ultimo = objeto;
+        }else{
+            ultimo->setSiguiente(objeto);
+            ultimo = objeto;
+        }
+        ultimo->setSiguiente(NULL);
+
+}
+
+Objeto* Lista::pop(){
+    Objeto* primeroEnCola = primero;
+    primero = primero->getSiguiente();
+    return primeroEnCola;
+}
