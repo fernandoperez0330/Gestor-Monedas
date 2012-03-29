@@ -59,36 +59,39 @@ void Devolver::pressed_btnGenerar(){
                         result+= "\n";
                         QMessageBox::information(this,"segundo",result.c_str());
                     }
+                    //cuando la sumatoria es menor que el total, buscar las posibles combinaciones
                     else{
-                        totalSubsum = 0;
                         subObjetoActual = modelo -> getMonedas() -> getPrimero();
-                        if (((Monedas* )objetoActual) -> getValor() == ((Monedas* )subObjetoActual) -> getValor())
-                            continue;
                         while(subObjetoActual != NULL){
-                            for(b = 0 ;b < ((Monedas* )subObjetoActual) -> getCantidad(); b++){
-                                totalSubsum = totalSubsum + ((Monedas* )subObjetoActual) -> getValor();
-                                result= "totalsum.: ";
-                                result+= itoa(totalSum,buf,10);
-                                result+= ", ";
-                                result+= "totalSUBsum.: ";
-                                result+= itoa(totalSubsum,buf,10);
-                                result+= ", ";
-                                result+= "totalSUBsum + totalsum.: ";
-                               // result+= itoa(((int)totalSubsum + totalSum),buf,10);
-                                //QMessageBox::information(this,"mensaje",result.c_str());
-
-                                //romper el ciclo si la suma es mayor que el solicitado
-                                if ((totalSum + totalSubsum) == total){
-                                    result = itoa(i+2,buf,10);
-                                    result+= " monedas de ";
-                                    result+= itoa(((Monedas*) objetoActual)->getValor(),buf,10);
-                                    result+= " y ";
-                                    result+= itoa(b+1,buf,10);
-                                    result+= " monedas de ";
-                                    result+= itoa(((Monedas*) subObjetoActual)->getValor(),buf,10);
-                                    result+= "\n";
-                                    QMessageBox::information(this,"tercero",result.c_str());
-                                }else continue;
+                            int valor = ((Monedas*) objetoActual) -> getValor();
+                            int subValor = ((Monedas*) subObjetoActual) -> getValor();
+                            totalSubsum = 0;
+                            if (valor != subValor){
+                                for(b = 1 ;b <=((Monedas* )subObjetoActual) -> getCantidad(); b++){
+                                    totalSubsum = totalSubsum + ((Monedas* )subObjetoActual) -> getValor();
+                                    /*result= "totalsum.: ";
+                                    result+= itoa(totalSum,buf,10);
+                                    result+= ", ";
+                                    result+= "totalSUBsum.: ";
+                                    result+= itoa(totalSubsum,buf,10);
+                                    result+= ", ";
+                                    result+= "totalSUBsum + totalsum.: ";*/
+                                   // result+= itoa(((int)totalSubsum + totalSum),buf,10);
+                                    //QMessageBox::information(this,"mensaje",result.c_str());
+                                    int subTotal = totalSum + totalSubsum;
+                                    //romper el ciclo si la suma es mayor que el solicitado
+                                    if (subTotal == total){
+                                        result = itoa(i+2,buf,10);
+                                        result+= " monedas de ";
+                                        result+= itoa(((Monedas*) objetoActual)->getValor(),buf,10);
+                                        result+= " y ";
+                                        result+= itoa(b,buf,10);
+                                        result+= " monedas de ";
+                                        result+= itoa(((Monedas*) subObjetoActual)->getValor(),buf,10);
+                                        result+= "\n";
+                                        QMessageBox::information(this,"tercero",result.c_str());
+                                    }
+                                }
                             }
                             b = 0;
                             subObjetoActual = subObjetoActual -> getSiguiente();
