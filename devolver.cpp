@@ -19,6 +19,7 @@ void Devolver::pressed_btnCancelar(){
     (new MainWindow) -> show();
 }
 
+
 //metodo para generar devueltas
 void Devolver::pressed_btnGenerar(){
     int total = ui ->fldTotal -> text().toUInt();
