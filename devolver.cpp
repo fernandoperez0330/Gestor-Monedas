@@ -24,13 +24,8 @@ void Devolver::pressed_btnCancelar(){
 //metodo para generar devueltas
 void Devolver::pressed_btnGenerar(){
     int total = ui ->fldTotal -> text().toUInt();
-    int totalSum = 0;
-    int totalCantidad = 0;
-    char buf[5];
-    string result = "";
     ModeloMonedas* modelo = new ModeloMonedas;
     Objeto* objetoActual;
-    Objeto* subObjetoActual;
     if (total > modelo ->getTotal()){
         QMessageBox::warning(this,"Error","No hay suficiente dinero en caja para devolverle, estamos en quiebra!!");
     }else{
@@ -43,7 +38,6 @@ void Devolver::pressed_btnGenerar(){
         //organizar los elementos de menor a mayor
         ui -> tableWidget -> setRowCount(combinaciones -> getSize());
         string strCombinacion;
-        int count = 0;
         while(combinacionActual != NULL){
             Objeto* combinacionElemento = ((Lista*) combinacionActual) -> getPrimero();
             strCombinacion = "";
