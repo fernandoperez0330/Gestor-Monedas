@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <sstream>
 #include <fstream>
+#include "Devueltas.h"
 
 #include "Objeto.h"
 #include "Lista.h"
@@ -91,4 +92,86 @@ int ModeloMonedas::getTotal(){
 Lista* ModeloMonedas::getMonedas(){
     return this -> monedas;
 }
+Lista* ModeloMonedas::listaDevueltas(int total){
+    int totalSum = 0;
+    int totalSubsum = 0;
+    int b = 0;
+    int i = 0;
+    char buf[5];
 
+
+    Objeto* objetoActual;
+    Objeto* subObjetoActual;
+    //proceder a buscar los cambios (en caso de que aplique)
+    objetoActual = this -> getMonedas() -> getPrimero();
+    /*
+    //Lista general de Devueltas
+
+    */
+    Lista* listaDevueltaGeneral = new Lista;
+    Lista* listaCombinacion;
+    Devueltas * devuelta;
+    while(objetoActual != NULL){
+        if (total == ((Monedas*) objetoActual)->getValor()){
+            listaCombinacion = new Lista;
+            devuelta = new Devueltas;
+            devuelta -> setCantidad(1);
+            devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+            listaCombinacion -> agregar(devuelta);
+            listaDevueltaGeneral -> agregar(listaCombinacion);
+
+        }else{
+            int cantidadTotal = ((Monedas*) objetoActual)->getCantidad();
+            totalSum = ((Monedas*) objetoActual)->getValor();
+            for(i = 0; i < cantidadTotal; i++){
+                totalSum+= ((Monedas*) objetoActual)->getValor();
+                //romper el ciclo si la suma es mayor que el solicitado
+                if(totalSum > total) break;
+                else if (totalSum == total){
+                    listaCombinacion = new Lista;
+                    devuelta = new Devueltas;
+                    devuelta -> setCantidad(i+2);
+                    devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+                    listaCombinacion -> agregar(devuelta);
+                    listaDevueltaGeneral -> agregar(listaCombinacion);
+
+                }
+                //cuando la sumatoria es menor que el total, buscar las posibles combinaciones
+                else{
+                    subObjetoActual = this -> getMonedas() -> getPrimero();
+                    while(subObjetoActual != NULL){
+                        int valor = ((Monedas*) objetoActual) -> getValor();
+                        int subValor = ((Monedas*) subObjetoActual) -> getValor();
+                        totalSubsum = 0;
+                        if (valor != subValor){
+                            for(b = 1 ;b <=((Monedas* )subObjetoActual) -> getCantidad(); b++){
+                                totalSubsum = totalSubsum + ((Monedas* )subObjetoActual) -> getValor();
+                                int subTotal = totalSum + totalSubsum;
+                                //romper el ciclo si la suma es mayor que el solicitado
+                                if (subTotal == total){
+                                    listaCombinacion = new Lista;
+                                    devuelta = new Devueltas;
+                                    devuelta -> setCantidad(i+2);
+                                    devuelta -> setValor(((Monedas*) objetoActual)->getValor());
+                                    listaCombinacion -> agregar(devuelta);
+
+                                    devuelta = new Devueltas;
+                                    devuelta -> setCantidad(b);
+                                    devuelta -> setValor(((Monedas*) subObjetoActual)->getValor());
+                                    listaCombinacion -> agregar(devuelta);
+
+                                    listaDevueltaGeneral -> agregar(listaCombinacion);
+                                }
+                            }
+                        }
+                        subObjetoActual = subObjetoActual -> getSiguiente();
+                    }
+                }
+            }
+        }
+        objetoActual = objetoActual -> getSiguiente();
+
+
+}
+
+}

@@ -34,5 +34,7 @@ class ModeloMonedas{
         Lista* getTodos();
         //metodo para persisir los datos actuales de la lista al archivo de datos
         void persistir();
+        //metodo para retornar una lista con otra lista
+        Lista* listaDevueltas(int total);
 };
 #endif //MODELOMONEDAS_H
