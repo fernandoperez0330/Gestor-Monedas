@@ -7,18 +7,12 @@ class Cola
 {
 
     private:
-        Objeto* anterior;
-        Objeto* siguiente;
         int montoEnEspera;
 
     public:
         Cola();
-        getAnterior();
-        setAnterior(Objeto* objeto);
-        getSiguiente();
-        setSiguiente(Objeto* objeto);
-        getMontoEnEspera();
-        setMontoEnEspera(int montoEnEspera);
+        int getMontoEnEspera();
+        void setMontoEnEspera(int montoEnEspera);
 
 };
 

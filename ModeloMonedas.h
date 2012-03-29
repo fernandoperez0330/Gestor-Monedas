@@ -19,7 +19,6 @@ class ModeloMonedas{
     public:
         //variable
         Lista* listaDevueltas;
-        Lista* listaDevueltasOrganizadas;
         //elemento separador de los elementos del archivo
         string separador;
         //metodo constructor (privado)
@@ -42,7 +41,8 @@ class ModeloMonedas{
         Lista* generarListaDevueltas(int total);
         //metodo para controlar que no se inserte combinaciones iguales (solo en algunos casos)
         bool agregarDevueltas(Lista* combinacionAgregar);
-        Lista* generalDevueltasOrganizadas(Lista *lista, int total);
+        //metodo para generar las combinaciones de devueltas organizadas
+        Lista* generarDevueltasOrganizadas(Lista *listaAOrganizar);
 
 };
 #endif //MODELOMONEDAS_H
